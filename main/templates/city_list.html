@@ -1,0 +1,6 @@
+{% for city in cities  %}
+    <a href="/city_detail/{{ city.pk }}/">{{ city }}</a>
+    {{ city.pk }}
+    {{ state.abbrev }}
+    </br>
+{% endfor %}

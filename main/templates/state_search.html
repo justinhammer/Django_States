@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block body %}
+
+<div class="text-center">
+    <h1 style="color:#FFF;">Search For a State:</h1>
+        <form action="/state_search/" method="GET">
+            {% csrf_token %}
+            <input name="name" type="text">
+        </form>
+</div>
+<br>
+<div class ="container">
+<div class="row">
+<div class="col-md-6 col-sm-6 col-md-offset-3 col-sm-offset-3">
+    <div class ="text-center" style="background: #fff;
+        background: rgba(255,255,255,0.9);">
+        {% for state in states %}
+            <a href="/state_detail/{{ state.pk }}/"> {{ state }} </a>
+        {% endfor %} 
+    </div>
+</div>
+</div>
+</div>
+<br>
+</pre>
+
+{% endblock %}
