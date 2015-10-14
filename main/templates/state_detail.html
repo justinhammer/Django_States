@@ -21,10 +21,14 @@
                     </div>
                 </div>
                 <div class="col-md-4">
+                    <p>State Population:
+                        <strong>{{ state.pop|intcomma }}</strong>
+                    </p>
+
                     <p>Capital:
                         <strong><a href="/state_capital_detail/{{ state.statecapital.pk }}/">{{ state.statecapital.name }}</a> </strong>
                     </p>
-                    <p>Population:
+                    <p>Capital Population:
                         <strong>{{ state.statecapital.pop|intcomma }}</strong>
                     </p>
 

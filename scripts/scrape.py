@@ -28,8 +28,6 @@ filtered_html = tree.xpath(href_xpath)
 
 links = [link for link in filtered_html if 'htm' in link]
 
-print links
-
 for link in links:
     # state_name_pattern = "(?<=\W).*(?=.htm)"
     # state_name_search = re.search(state_name_pattern, link)
@@ -45,22 +43,23 @@ for link in links:
 
     state_name_path = '//*[@id="content"]/div[1]/div[2]/div/div[1]/h1/text()'
     state_name_xpath_search_results = tree.xpath(state_name_path)
-    print tree.xpath(state_name_path)
-    print link
+    # print tree.xpath(state_name_path)
+    # print link
 
-    state_pattern = "(?<=\()(.*)(?=\))"
-    state_search = re.search(state_pattern, state_name_xpath_search_results[0])
-    state_abbrev = state_search.group()
+    if state_name_xpath_search_results:
+        state_pattern = "(?<=\()(.*)(?=\))"
+        state_search = re.search(state_pattern, state_name_xpath_search_results[0])
+        state_abbrev = state_search.group()
 
-    state_object = State.objects.get(abbrev=state_abbrev)
+        state_object = State.objects.get(abbrev=state_abbrev)
 
     state_population_xpath = "//*[@id='collapseQuick-Facts']/div/ul/li[6]/div/text()"
-
     state_population_string = tree.xpath(state_population_xpath)
 
     #How can I clean up this string so the regex is more simple?
     #Look at strip and replace to clean up this string
     # print state_population_string
+
     state_population_pattern = "\d+,\d+,\d+"
     cleaned_pop_string = re.search(state_population_pattern, '%s' % state_population_string)
 
@@ -72,28 +71,24 @@ for link in links:
     except AttributeError, e:
         pass
 
-    state_map_link_xpath = '//*[@id="collapseGovernment"]/div/ul/li[2]/div/a/@href'
+    if state_name_xpath_search_results:
+        state_map_link_xpath = '//*[@id="collapseGovernment"]/div/ul/li[2]/div/a/@href'
+        state_map_link = tree.xpath(state_map_link_xpath)[0]
 
-    state_map_link = tree.xpath(state_map_link_xpath)[0]
-
-    state_map_page = urllib.urlopen(state_map_link)
-
-    state_map_page_html = state_map_page.read()
+        state_map_page = urllib.urlopen(state_map_link)
+        state_map_page_html = state_map_page.read()
 
     tree = etree.parse(StringIO.StringIO(state_map_page_html), parser)
 
     # print state_map_page_html
 
     image_link_xpath = '//*[@id="innerPage"]/img/@src'
-
     state_map_image = tree.xpath(image_link_xpath)[0]
 
     url = 'http://quickfacts.census.gov/%s' % state_map_image
 
     image_response = urllib2.urlopen(url).read()
-
     img_temp = NamedTemporaryFile(delete=True)
-
     img_temp.write(image_response)
 
     try:
@@ -101,6 +96,16 @@ for link in links:
     except Exception, e:
         pass
 
+# if state_name_xpath_search_results:
+#     state_nickname_link_xpath = "//*[@id='collapseQuick-Facts]/div/ul/li[5]/div/a/@href"
+#     print state_nickname_link_xpath
+#     state_nickname_link = tree.xpath(state_nickname_link_xpath)[0]
+#     print state_nickname_link
+
+#     state_nickname_page = urllib.urlopen(state_nickname_link)
+#     state_nickname_page_html = state_nickname_page.read()
+
+#     tree = etree.parse(StringIO.StringIO(state_nickname_page_html), parser)
 
 
 
