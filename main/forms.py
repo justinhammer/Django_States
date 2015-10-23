@@ -11,7 +11,7 @@ class ContactForm(forms.Form):
     phone = forms.CharField(required=True)
     message = forms.CharField(required=True, widget=forms.Textarea)
 
-    #args are variables, kew-word arguments are variables and a value
+    # args are variables, kew-word arguments are variables and a value
     # val ,   val2="something"
     def __init__(self, *args, **kwargs):
         super(ContactForm, self).__init__(*args, **kwargs)
