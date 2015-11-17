@@ -1,5 +1,5 @@
 from django.shortcuts import render, render_to_response, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from main.models import State, City, StateCapital
 from django.template import RequestContext
 from main.forms import ContactForm, CityEditForm, StateCreateForm, StateEditForm, CityCreateForm
@@ -15,6 +15,70 @@ from django.conf import settings
 # edit view
 # delete view
 # make the view --> make the url
+
+
+def api_state_list(request):
+
+    states = State.objects.all()
+
+    api_dict = {}
+
+    state_list = []
+
+    api_dict['states'] = state_list
+
+    for state in states:
+        cities = state.city_set.all()[:30]
+
+        city_list = []
+
+        for city in cities:
+            city_list.append({'city': city.city, 'pk': city.pk})
+
+        state_list.append({'name':state.name,
+                            'abbrev':state.abbrev,
+                            'pop':state.pop,
+                            'map':state.state_map.url,
+                            'pk':state.pk,
+                            # 'cities':[city.city for city in state.city_set.all()[:30]],
+                            'cities': city_list,
+                            })
+
+    return JsonResponse(api_dict)
+
+
+def api_city_list(request):
+
+    cities = City.objects.all()[:50]
+
+    api_dict = {}
+
+    city_list = []
+
+    api_dict['cities'] = city_list
+
+    for city in cities:
+
+        try:
+            city_list.append({'city':city.city, 'zip_code':city.zip_code, 'lat':city.lat, 'lon':city.lon, 'county':city.county, 'state':city.state.name})
+        except:
+            pass
+
+    return JsonResponse(api_dict)
+
+
+def ajax_city_list(request):
+
+    context = {}
+
+    return render_to_response('ajax_city_list.html', context, context_instance=RequestContext(request))
+
+
+def ajax_state_list(request):
+
+    context = {}
+
+    return render_to_response('ajax_state_list.html', context, context_instance=RequestContext(request))
 
 
 def state_list(request):

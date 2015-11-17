@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ajax City List</title>
+</head>
+<body>
+
+<ul id="city-list">
+</ul>
+
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js'></script>
+
+<script>
+
+$(function() {
+    $.ajax({
+        type:'GET',
+        url:'/api_city_list',
+        data: {},
+        success: function(data) {
+            for(key in data) {
+                console.log(data[key]);
+                for(i=0; i<data[key].length; i++) {
+                    console.log(data[key][i]);
+
+                    $('#city-list').append('<li>' + data[key][i]['city']
+                        + ' '
+                        + data[key][i]['zip_code']
+                        + ' '
+                        + data[key][i]['lat']
+                        + ' '
+                        + data[key][i]['lon']
+                        + ' '
+                        + data[key][i]['county']
+                        + ' '
+                        + data[key][i]['state']);
+                }
+            }
+        }
+    })
+})
+
+</script>
+
+
+
+
+
+
+
+
+</body>
+</html>

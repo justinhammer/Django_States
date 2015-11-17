@@ -88,11 +88,11 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql', 
-        'NAME': 'first_django', 
-        'HOST': '127.0.0.1', 
-        'USER': 'root', 
-        'PASSWORD':  
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'first_django',
+        'HOST': '127.0.0.1',
+        'USER': 'root',
+        'PASSWORD': 'BYUCougars4321',
         'PORT': ''
     }
 }
@@ -121,7 +121,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 
-EMAIL_HOST_PASSWORD = 
+EMAIL_HOST_USER = 'juhlaylayl33thaxors@gmail.com'
+EMAIL_HOST_PASSWORD = 'umadbruh?'
 EMAIL_USE_TLS = True
 

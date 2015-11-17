@@ -20,6 +20,12 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+
+    url(r'^ajax_state_list/$', 'main.views.ajax_state_list'),
+    url(r'^api_state_list/$', 'main.views.api_state_list'),
+    url(r'^ajax_city_list/$', 'main.views.ajax_city_list'),
+    url(r'^api_city_list/$', 'main.views.api_city_list'),
+
     url(r'^state_list/$', 'main.views.state_list'),
     url(r'^state_detail/(?P<pk>\d+)/$', 'main.views.state_detail'),
     url(r'^state_search/$', 'main.views.state_search'),

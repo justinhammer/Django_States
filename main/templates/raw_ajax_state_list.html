@@ -1,0 +1,58 @@
+<!-- For Reference on the raw ajax style -->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ajax State List</title>
+</head>
+<body>
+
+<ul id="state-list">
+    <li>test element</li>
+</ul>
+
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js'></script>
+
+<script>
+
+    $(function() {
+        console.log('something');
+
+        $('#state-list').append('<li>extra element</li>');
+
+        $.ajax({
+            type:'GET',
+            url:'/api_state_list/',
+            data: {},
+            success: function(data) {
+                // console.log(data);
+
+                for(key in data) {
+                    console.log(data[key]);
+                    for(i=0; i<data[key].length; i++) {
+                        console.log(data[key][i]);
+
+                        $('#state-list').append('<li>' + data[key][i]['name'] 
+                            + ' ' + 
+                            data[key][i]['abbrev'] 
+                            + '</li>'
+                            + '<img src=' + data[key][i]['map'] + ' "height="100" width="100" />');
+
+                    }
+                }
+            }
+        })
+    });
+
+
+    // $(document).ready(function() {
+    //     $('#state-list').append('<li>extra element</li>');
+    // });
+</script>
+
+
+
+</body>
+</html>

@@ -4,7 +4,7 @@ from django.db import models
 
 
 class State(models.Model):
-    name = models.CharField(max_length=255, null=True, blank=True)
+    name = models.CharField(max_length=255, null=True, blank=True, db_index=True)
     abbrev = models.CharField(max_length=255, null=True, blank=True)
     pop = models.CharField(max_length=255, null=True, blank=True)
     state_map = models.ImageField(upload_to='state_map', null=True, blank=True)
@@ -32,7 +32,7 @@ class City(models.Model):
     zip_code = models.CharField(max_length=255, null=True, blank=True)
     lat = models.FloatField(null=True, blank=True)
     lon = models.FloatField(null=True, blank=True)
-    city = models.CharField(max_length=255, null=True, blank=True)
+    city = models.CharField(max_length=255, null=True, blank=True, db_index=True)
     county = models.CharField(max_length=255, null=True, blank=True)
     state = models.ForeignKey('main.State', null=True, blank=True)
 
